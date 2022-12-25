@@ -1,0 +1,51 @@
+<!-- Inside index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Razorpay Web-Integration</title>
+</head>
+
+<body>
+        <button id="pay-button">
+            Pay Now
+        </button>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+        "key": "rzp_test_BOJKRLdGj32zDZ", // Enter the Key ID generated from the Dashboard
+        "amount": 300*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 means 50000 paise or ₹500.
+        "currency": "INR",
+        "name": "STUREC",
+        "order_id": "order_Ku33gtoyc2sJOe",
+        "description": "ERP system",
+        "handler": function (response) {
+                console.log(response)
+            },
+        "prefill": {
+            "name": "Sidhu Moosewala",
+            "email": "sidhumoosewala@gmail.com",
+            "contact": "9999999999"
+        },
+        "theme": {
+            "color": "#9932CC"
+        }
+    }
+        var razorpayObject = new Razorpay(options);
+        console.log(razorpayObject);
+        razorpayObject.on('payment.failed', function (response) {
+            console.log(response);
+            alert("This step of Payment Failed");
+        });
+
+        document.getElementById('pay-button').onclick = function (e) {
+            razorpayObject.open();
+            e.preventDefault();
+        }
+    </script>
+
+</body>
+
+</html>
